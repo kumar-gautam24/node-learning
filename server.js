@@ -1,5 +1,6 @@
 import express from 'express';
 import productRoutes from './routes/productRoutes.js'; 
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
 const PORT = 3000;
@@ -11,7 +12,10 @@ app.use(express.json());
 // This line says: "If the URL starts with /products, use the productRoutes file"
 app.use('/products', productRoutes);
 
-// Default Route (Optional)
+// auth routes
+app.use('/auth', authRoutes);
+
+// Default Route 
 app.get('/', (req, res) => {
     res.send("Welcome to the Clean MVC API!");
 });
