@@ -1,0 +1,34 @@
+name: Green Wall Painter
+
+on:
+  schedule:
+    # Runs every day at 12:00 UTC
+    - cron: "0 12 * * *"
+  workflow_dispatch: # Allows you to click a button to run it manually to test
+
+permissions:
+  contents: write
+
+jobs:
+  paint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Make a Commit
+        run: |
+          # Configures git with your specific account details
+          git config --global user.name "Gautam Kumar"
+          git config --global user.email "gk39951@gmail.com"
+          
+          # Update a text file with the current date
+          date >> paint_log.txt
+          
+          # Commit the change
+          git add paint_log.txt
+          git commit -m "Daily update: $(date)"
+          
+          # Push back to the repo
+          git push
