@@ -20,21 +20,25 @@ export const getProducts = (req, res) => {
 
 export const addProduct = (req, res) => {
     const { name, price } = req.body;
-    //validaiton if needed
 
+    // user id 
+    const userId = req.userId;
+
+
+    //validaiton if needed
     // sql  
     /// we use '?' as placeholders to prevent SQL Injections
     // note: we use fucntion instead of => to access 'this'
-    const query = `INSERT INTO products (name,price) VALUES (?,?)`;
+    const query = `INSERT INTO products (name,price,owner_id) VALUES (?,?,?)`;
 
-    db.run(query, [name, price], function (err) {
+    db.run(query, [name, price, userId], function (err) {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
 
         db.all("SELECT * FROM products", [], (err, rows) => {
             if (err) {
-                res.status(500).json({ error: 'added but failed' });
+                res.status(500).json({ error: err.message });
             }
             else {
                 res.status(200).json(rows);

@@ -6,11 +6,19 @@ import {
     updateProduct,
     deleteProduct
 } from '../controllers/productController.js';
+import { verifyToken } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
+// public : See all products
 router.get('/', getProducts);
-router.post('/', addProduct);
-router.put('/', updateProduct);
-router.delete('/', deleteProduct);
+
+// Protected : Add a product
+router.post('/', verifyToken, addProduct);
+
+// Protected : Update a product
+router.put('/', verifyToken, updateProduct);
+
+// Protected : Delete a product
+router.delete('/', verifyToken, deleteProduct);
 
 export default router;
