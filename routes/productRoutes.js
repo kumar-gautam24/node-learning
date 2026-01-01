@@ -16,9 +16,9 @@ router.get('/', getProducts);
 router.post('/', verifyToken, addProduct);
 
 // Protected : Update a product
-router.put('/', verifyToken, updateProduct);
+router.put('/:id', verifyToken, updateProduct);
 
 // Protected : Delete a product
-router.delete('/', verifyToken, deleteProduct);
+router.delete('/:id', verifyToken, deleteProduct);
 
 export default router;
